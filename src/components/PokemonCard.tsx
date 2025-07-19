@@ -1,31 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pokemon } from '../types';
+import { useTheme } from '@mui/material/styles';
+import { pokemonTypeColors } from '../theme';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-const typeColors: { [key: string]: string } = {
-    fire: '#F08030',
-    water: '#6890F0',
-    grass: '#78C850',
-    electric: '#F8D030',
-    psychic: '#F85888',
-    ice: '#98D8D8',
-    dragon: '#7038F8',
-    dark: '#705848',
-    fairy: '#EE99AC',
-    normal: '#A8A878',
-    fighting: '#C03028',
-    flying: '#A890F0',
-    poison: '#A040A0',
-    ground: '#E0C068',
-    rock: '#B8A038',
-    bug: '#A8B820',
-    ghost: '#705898',
-    steel: '#B8B8D0'
-};
 
 interface PokemonCardProps {
     pokemon: Pokemon;
@@ -35,13 +17,14 @@ interface PokemonCardProps {
 const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
     const { name, sprites, types } = pokemon;
     const navigate = useNavigate();
+    const theme = useTheme();
 
     const handleClick = () => {
         navigate(`/pokemon/${name}`);
     };
 
     const mainType = types && types.length > 0 ? types[0].type.name : 'normal';
-    const bgColor = typeColors[mainType] || '#A8A878';
+    const bgColor = pokemonTypeColors[mainType as keyof typeof pokemonTypeColors] || pokemonTypeColors.normal;
     const cardBgColor = `${bgColor}33`;
 
     return (
@@ -50,7 +33,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
             sx={{
                 cursor: 'pointer',
                 background: `linear-gradient(135deg, ${cardBgColor} 60%, #fff 100%)`,
-                color: '#222',
+                color: theme.palette.text.primary,
                 borderRadius: 4,
                 p: 2,
                 mb: 2,
@@ -71,7 +54,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
                     sx={{
                         width: 96,
                         height: 96,
-                        background: '#f6f8fc',
+                        background: theme.palette.background.default,
                         borderRadius: '50%',
                         boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                         border: `2px solid ${bgColor}`,
@@ -89,10 +72,8 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
                             key={t.type.name}
                             label={t.type.name}
                             sx={{
-                                background: typeColors[t.type.name] || '#A8A878',
+                                background: pokemonTypeColors[t.type.name as keyof typeof pokemonTypeColors] || pokemonTypeColors.normal,
                                 color: '#fff',
-                                fontWeight: 500,
-                                textTransform: 'capitalize',
                             }}
                         />
                     ))}

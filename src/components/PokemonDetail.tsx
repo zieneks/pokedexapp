@@ -1,7 +1,8 @@
 import React from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { PokemonDetail as PokemonDetailType } from '../types';
-
+import { useTheme } from '@mui/material/styles';
+import { pokemonTypeColors } from '../theme';
 
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -15,29 +16,10 @@ interface PokemonDetailProps {
 
 const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
     const navigate = useNavigate();
-    const typeColors: { [key: string]: string } = {
-        fire: '#F08030',
-        water: '#6890F0',
-        grass: '#78C850',
-        electric: '#F8D030',
-        psychic: '#F85888',
-        ice: '#98D8D8',
-        dragon: '#7038F8',
-        dark: '#705848',
-        fairy: '#EE99AC',
-        normal: '#A8A878',
-        fighting: '#C03028',
-        flying: '#A890F0',
-        poison: '#A040A0',
-        ground: '#E0C068',
-        rock: '#B8A038',
-        bug: '#A8B820',
-        ghost: '#705898',
-        steel: '#B8B8D0'
-    };
+    const theme = useTheme();
 
     const mainType = pokemon.types && pokemon.types.length > 0 ? pokemon.types[0].type.name : 'normal';
-    const bgColor = typeColors[mainType] || '#A8A878';
+    const bgColor = pokemonTypeColors[mainType as keyof typeof pokemonTypeColors] || pokemonTypeColors.normal;
     const cardBgColor = `${bgColor}33`; 
 
     return (
@@ -68,7 +50,7 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
                     alt={pokemon.name}
                     style={{
                         border: `2px solid ${bgColor}`,
-                        background: '#f6f8fc',
+                        background: theme.palette.background.default,
                         borderRadius: '50%',
                         boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                         width: '160px',
@@ -81,39 +63,35 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
                 {pokemon.name}
             </Typography>
 
-            <Typography variant="h6" sx={{ color: '#3b4cca', mb: 1 }}>Types</Typography>
+            <Typography variant="h6" sx={{ color: theme.palette.primary.main, mb: 1 }}>Types</Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mb: 2 }}>
                 {pokemon.types.map((type) => (
                     <Chip
                         key={type.type.name}
                         label={type.type.name}
                         sx={{
-                            background: typeColors[type.type.name] || '#A8A878',
+                            background: pokemonTypeColors[type.type.name as keyof typeof pokemonTypeColors] || pokemonTypeColors.normal,
                             color: '#fff',
-                            fontWeight: 500,
-                            textTransform: 'capitalize',
                         }}
                     />
                 ))}
             </Box>
 
-            <Typography variant="h6" sx={{ color: '#3b4cca', mb: 1 }}>Abilities</Typography>
+            <Typography variant="h6" sx={{ color: theme.palette.primary.main, mb: 1 }}>Abilities</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1, mb: 2 }}>
                 {pokemon.abilities.map((ability) => (
                     <Chip
                         key={ability.ability.name}
                         label={ability.ability.name}
                         sx={{
-                            background: '#e0e7ff',
-                            color: '#222',
-                            fontWeight: 500,
-                            textTransform: 'capitalize',
+                            background: theme.palette.secondary.main,
+                            color: theme.palette.text.primary,
                         }}
                     />
                 ))}
             </Box>
 
-            <Typography variant="h6" sx={{ color: '#3b4cca', mb: 1 }}>Stats</Typography>
+            <Typography variant="h6" sx={{ color: theme.palette.primary.main, mb: 1 }}>Stats</Typography>
             <Box component="ul" sx={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
@@ -125,18 +103,18 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
             }}>
                 {pokemon.stats.map((stat) => (
                     <Box component="li" key={stat.stat.name} sx={{
-                        background: '#f3f4f6',
+                        background: theme.palette.background.paper,
                         borderRadius: 1,
                         p: 1,
                         fontSize: '0.98rem',
-                        color: '#444',
+                        color: theme.palette.text.secondary,
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         whiteSpace: 'nowrap',
                     }}>
                         <span style={{ fontWeight: 500 }}>{stat.stat.name}:</span>
-                        <span style={{ fontWeight: 600, color: '#3b4cca' }}>{stat.base_stat}</span>
+                        <span style={{ fontWeight: 600, color: theme.palette.primary.main }}>{stat.base_stat}</span>
                     </Box>
                 ))}
             </Box>

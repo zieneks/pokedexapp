@@ -1,8 +1,11 @@
 import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
 
 const Loader: React.FC = () => {
+    const theme = useTheme();
+    
     return (
         <Box
             sx={{
@@ -10,10 +13,10 @@ const Loader: React.FC = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100vh',
-                bgcolor: '#f6f8fc',
+                bgcolor: theme.palette.background.default,
             }}
         >
-            <CircularProgress sx={{ color: '#3b4cca', size: 60 }} />
+            <CircularProgress sx={{ color: theme.palette.primary.main, size: 60 }} />
         </Box>
     );
 };

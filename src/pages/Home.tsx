@@ -5,12 +5,14 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
 import { usePokemonQuery } from '../hooks/usePokemonQuery';
 import { Pokemon } from '../types';
 
 const Home: React.FC = () => {
     const { data: pokemonData = [], isLoading: loading, error, refetch } = usePokemonQuery();
     const [searchTerm, setSearchTerm] = useState('');
+    const theme = useTheme();
 
     const onSearch = (term: string) => {
         setSearchTerm(term.toLowerCase());
@@ -45,7 +47,7 @@ const Home: React.FC = () => {
                     sx={{
                         m: 0,
                         fontWeight: 600, // Zmniejszone z 700 na 600
-                        color: '#3b4cca',
+                        color: theme.palette.primary.main,
                         fontSize: { xs: '1.4rem', sm: '1.8rem', md: '2.2rem' },
                         textAlign: { xs: 'center', sm: 'left' },
                         letterSpacing: 1,
