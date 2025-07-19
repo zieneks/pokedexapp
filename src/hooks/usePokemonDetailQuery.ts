@@ -14,7 +14,7 @@ export const usePokemonDetailQuery = (name: string) => {
     queryKey: ['pokemon', name],
     queryFn: () => fetchPokemonDetail(name),
     enabled: !!name,
-    staleTime: 10 * 60 * 1000, // 10 minutes
-    gcTime: 15 * 60 * 1000, // 15 minutes (garbage collection time)
+    staleTime: 10 * 60 * 1000, 
+    gcTime: 15 * 60 * 1000, 
   });
 }; 

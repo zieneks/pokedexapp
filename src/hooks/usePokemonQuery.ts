@@ -8,7 +8,7 @@ const fetchPokemonList = async (): Promise<Pokemon[]> => {
   }
   const data = await response.json();
   
-  // Fetch detailed data for each Pokemon
+ 
   const detailedData = await Promise.all(
     data.results.map(async (pokemon: { name: string }) => {
       const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
@@ -26,7 +26,7 @@ export const usePokemonQuery = () => {
   return useQuery<Pokemon[], Error>({
     queryKey: ['pokemonList'],
     queryFn: fetchPokemonList,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (garbage collection time)
+    staleTime: 5 * 60 * 1000, 
+    gcTime: 10 * 60 * 1000, 
   });
 }; 

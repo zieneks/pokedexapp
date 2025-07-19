@@ -130,8 +130,13 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
                         p: 1,
                         fontSize: '0.98rem',
                         color: '#444',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        whiteSpace: 'nowrap',
                     }}>
-                        <strong>{stat.stat.name}:</strong> {stat.base_stat}
+                        <span style={{ fontWeight: 500 }}>{stat.stat.name}:</span>
+                        <span style={{ fontWeight: 600, color: '#3b4cca' }}>{stat.base_stat}</span>
                     </Box>
                 ))}
             </Box>

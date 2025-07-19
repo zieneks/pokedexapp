@@ -44,7 +44,7 @@ const Home: React.FC = () => {
                     component="h1"
                     sx={{
                         m: 0,
-                        fontWeight: 700,
+                        fontWeight: 600, // Zmniejszone z 700 na 600
                         color: '#3b4cca',
                         fontSize: { xs: '1.4rem', sm: '1.8rem', md: '2.2rem' },
                         textAlign: { xs: 'center', sm: 'left' },
