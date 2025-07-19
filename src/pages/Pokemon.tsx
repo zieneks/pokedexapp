@@ -1,43 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import PokemonDetail from '../components/PokemonDetail';
 import Loader from '../components/Loader';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { usePokemonDetailQuery } from '../hooks/usePokemonDetailQuery';
 
 const Pokemon: React.FC = () => {
     const { name } = useParams<{ name: string }>();
-    const [pokemonData, setPokemonData] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchPokemon = async () => {
-            try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch Pokémon data');
-                }
-                const data = await response.json();
-                setPokemonData(data);
-            } catch (err) {
-                if (err instanceof Error) {
-                    setError(err.message);
-                } else {
-                    setError(String(err));
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPokemon();
-    }, [name]);
+    const { data: pokemonData, isLoading: loading, error } = usePokemonDetailQuery(name || '');
 
     if (loading) {
         return <Loader />;
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return (
+            <Box sx={{ textAlign: 'center', mt: 4 }}>
+                <Typography color="error">
+                    Error: {error.message}
+                </Typography>
+            </Box>
+        );
     }
 
     return (

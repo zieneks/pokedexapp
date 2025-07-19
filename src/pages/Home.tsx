@@ -1,61 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PokemonList from '../components/PokemonList';
 import Loader from '../components/Loader';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
+import Button from '@mui/material/Button';
+import { usePokemonQuery } from '../hooks/usePokemonQuery';
+import { Pokemon } from '../types';
 
 const Home: React.FC = () => {
-    const [pokemonData, setPokemonData] = useState<any[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const { data: pokemonData = [], isLoading: loading, error, refetch } = usePokemonQuery();
     const [searchTerm, setSearchTerm] = useState('');
 
     const onSearch = (term: string) => {
         setSearchTerm(term.toLowerCase());
     };
 
-    const filteredPokemon = pokemonData.filter(pokemon =>
+    const filteredPokemon = pokemonData.filter((pokemon: Pokemon) =>
         pokemon.name.toLowerCase().startsWith(searchTerm)
     );
-    
-
-    useEffect(() => {
-        const fetchPokemon = async () => {
-            try {
-                const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=60');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch Pokémon data');
-                }
-                const data = await response.json();
-                const detailedData = await Promise.all(
-                    data.results.map(async (pokemon: { name: string }) => {
-                        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
-                        return await res.json();
-                    })
-                );
-                setPokemonData(detailedData);
-            } catch (err) {
-                if (err instanceof Error) {
-                    setError(err.message);
-                } else {
-                    setError(String(err));
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPokemon();
-    }, []);
 
     if (loading) {
         return <Loader />;
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return (
+            <Box sx={{ textAlign: 'center', mt: 4 }}>
+                <Typography color="error" sx={{ mb: 2 }}>
+                    Error: {error.message}
+                </Typography>
+                <Button variant="contained" onClick={() => refetch()}>
+                    Try Again
+                </Button>
+            </Box>
+        );
     }
 
     return (
@@ -88,7 +67,7 @@ const Home: React.FC = () => {
                     Pokemon not found. Try a different search term.
                 </Typography>
             ) : (
-                <PokemonList pokemons={filteredPokemon} loading={loading} error={error} />
+                <PokemonList pokemons={filteredPokemon} loading={loading} error={null} />
             )}
         </Box>
     );
