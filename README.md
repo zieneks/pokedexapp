@@ -1,3 +1,6 @@
+## LIVE
+https://pokeedexapp.netlify.app/
+
 # PokeAPI React App
 
 A modern React application that fetches data from the public PokéAPI and displays a comprehensive Pokémon database with custom caching, theming, and user experience features.
