@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 
-// Kolory typów Pokemonów
 export const pokemonTypeColors = {
   fire: '#F08030',
   water: '#6890F0',
@@ -34,60 +33,60 @@ export const theme = createTheme({
       'sans-serif',
     ].join(','),
     h1: {
-      fontWeight: 600, // Zmniejszone z 700 na 600
+      fontWeight: 600, 
     },
     h2: {
-      fontWeight: 500, // Zmniejszone z 600 na 500
+      fontWeight: 500, 
     },
     h3: {
-      fontWeight: 500, // Zmniejszone z 600 na 500
+      fontWeight: 500, 
     },
     h4: {
-      fontWeight: 400, // Zmniejszone z 500 na 400
+      fontWeight: 400, 
     },
     h5: {
-      fontWeight: 400, // Zmniejszone z 500 na 400
+      fontWeight: 400, 
     },
     h6: {
-      fontWeight: 400, // Zmniejszone z 500 na 400
+      fontWeight: 400, 
     },
     body1: {
-      fontWeight: 300, // Zmniejszone z 400 na 300
+      fontWeight: 300, 
     },
     body2: {
-      fontWeight: 300, // Zmniejszone z 400 na 300
+      fontWeight: 300, 
     },
     button: {
-      fontWeight: 400, // Zmniejszone z 500 na 400
-      textTransform: 'none', // Usuwa automatyczne wielkie litery
+      fontWeight: 400, 
+      textTransform: 'none', 
     },
   },
   palette: {
     primary: {
-      main: '#3b4cca', // Główny kolor Pokemon
+      main: '#3b4cca', 
     },
     secondary: {
-      main: '#e0e7ff', // Kolor dla abilities
+      main: '#e0e7ff', 
     },
     background: {
-      default: '#f6f8fc', // Tło aplikacji
-      paper: '#f3f4f6', // Tło dla statystyk
+      default: '#f6f8fc', 
+      paper: '#f3f4f6', 
     },
     text: {
-      primary: '#222', // Główny kolor tekstu
-      secondary: '#444', // Drugorzędny kolor tekstu
+      primary: '#222', 
+      secondary: '#444', 
     },
     error: {
-      main: '#C03028', // Kolor błędów (fighting type)
+      main: '#C03028', 
     },
     success: {
-      main: '#78C850', // Kolor sukcesu (grass type)
+      main: '#78C850', 
     },
     warning: {
-      main: '#F08030', // Kolor ostrzeżeń (fire type)
+      main: '#F08030', 
     },
     info: {
-      main: '#6890F0', // Kolor informacji (water type)
+      main: '#6890F0', 
     },
   },
   components: {

@@ -65,9 +65,9 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
 
             <Typography variant="h6" sx={{ color: theme.palette.primary.main, mb: 1 }}>Types</Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mb: 2 }}>
-                {pokemon.types.map((type) => (
+                {pokemon.types.map((type, index) => (
                     <Chip
-                        key={type.type.name}
+                        key={`${pokemon.name}-type-${type.type.name}-${index}`}
                         label={type.type.name}
                         sx={{
                             background: pokemonTypeColors[type.type.name as keyof typeof pokemonTypeColors] || pokemonTypeColors.normal,
@@ -79,9 +79,9 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
 
             <Typography variant="h6" sx={{ color: theme.palette.primary.main, mb: 1 }}>Abilities</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1, mb: 2 }}>
-                {pokemon.abilities.map((ability) => (
+                {pokemon.abilities.map((ability, index) => (
                     <Chip
-                        key={ability.ability.name}
+                        key={`${pokemon.name}-ability-${ability.ability.name}-${index}`}
                         label={ability.ability.name}
                         sx={{
                             background: theme.palette.secondary.main,
@@ -101,8 +101,8 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
                 m: 0,
                 mb: 1,
             }}>
-                {pokemon.stats.map((stat) => (
-                    <Box component="li" key={stat.stat.name} sx={{
+                {pokemon.stats.map((stat, index) => (
+                    <Box component="li" key={`${pokemon.name}-stat-${stat.stat.name}-${index}`} sx={{
                         background: theme.palette.background.paper,
                         borderRadius: 1,
                         p: 1,

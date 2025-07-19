@@ -27,6 +27,37 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
     const bgColor = pokemonTypeColors[mainType as keyof typeof pokemonTypeColors] || pokemonTypeColors.normal;
     const cardBgColor = `${bgColor}33`;
 
+    if (!sprites || !sprites.front_default) {
+        return (
+            <Card
+                sx={{
+                    cursor: 'pointer',
+                    background: `linear-gradient(135deg, ${cardBgColor} 60%, #fff 100%)`,
+                    color: theme.palette.text.primary,
+                    borderRadius: 4,
+                    p: 2,
+                    mb: 2,
+                    textAlign: 'center',
+                    boxShadow: 4,
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    '&:hover': {
+                        transform: 'scale(0.99)',
+                        boxShadow: 8,
+                    },
+                }}
+            >
+                <CardContent sx={{ p: 0 }}>
+                    <Typography variant="h6" component="div" sx={{ fontWeight: 700, textTransform: 'capitalize', mb: 1 }}>
+                        {name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Loading...
+                    </Typography>
+                </CardContent>
+            </Card>
+        );
+    }
+
     return (
         <Card
             onClick={handleClick}
@@ -67,9 +98,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
                     {name}
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mb: 1 }}>
-                    {types.map((t) => (
+                    {types && types.map((t, index) => (
                         <Chip
-                            key={t.type.name}
+                            key={`${name}-${t.type.name}-${index}`}
                             label={t.type.name}
                             sx={{
                                 background: pokemonTypeColors[t.type.name as keyof typeof pokemonTypeColors] || pokemonTypeColors.normal,

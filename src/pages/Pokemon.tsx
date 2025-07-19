@@ -4,11 +4,11 @@ import PokemonDetail from '../components/PokemonDetail';
 import Loader from '../components/Loader';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { usePokemonDetailQuery } from '../hooks/usePokemonDetailQuery';
+import { usePokemonDetail } from '../hooks/usePokemonDetail';
 
 const Pokemon: React.FC = () => {
     const { name } = useParams<{ name: string }>();
-    const { data: pokemonData, isLoading: loading, error } = usePokemonDetailQuery(name || '');
+    const { data: pokemonData, loading, error } = usePokemonDetail(name || '');
 
     if (loading) {
         return <Loader />;
@@ -18,7 +18,7 @@ const Pokemon: React.FC = () => {
         return (
             <Box sx={{ textAlign: 'center', mt: 4 }}>
                 <Typography color="error">
-                    Error: {error.message}
+                    Error: {error}
                 </Typography>
             </Box>
         );

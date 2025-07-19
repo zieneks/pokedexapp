@@ -6,11 +6,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
-import { usePokemonQuery } from '../hooks/usePokemonQuery';
+import { usePokemonList } from '../hooks/usePokemonList';
 import { Pokemon } from '../types';
 
 const Home: React.FC = () => {
-    const { data: pokemonData = [], isLoading: loading, error, refetch } = usePokemonQuery();
+    const { data: pokemonData, loading, error } = usePokemonList();
     const [searchTerm, setSearchTerm] = useState('');
     const theme = useTheme();
 
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
         setSearchTerm(term.toLowerCase());
     };
 
-    const filteredPokemon = pokemonData.filter((pokemon: Pokemon) =>
+    const filteredPokemon = (pokemonData || []).filter((pokemon: Pokemon) =>
         pokemon.name.toLowerCase().startsWith(searchTerm)
     );
 
@@ -30,9 +30,9 @@ const Home: React.FC = () => {
         return (
             <Box sx={{ textAlign: 'center', mt: 4 }}>
                 <Typography color="error" sx={{ mb: 2 }}>
-                    Error: {error.message}
+                    Error: {error}
                 </Typography>
-                <Button variant="contained" onClick={() => refetch()}>
+                <Button variant="contained" onClick={() => window.location.reload()}>
                     Try Again
                 </Button>
             </Box>
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
                     component="h1"
                     sx={{
                         m: 0,
-                        fontWeight: 600, // Zmniejszone z 700 na 600
+                        fontWeight: 600, 
                         color: theme.palette.primary.main,
                         fontSize: { xs: '1.4rem', sm: '1.8rem', md: '2.2rem' },
                         textAlign: { xs: 'center', sm: 'left' },
